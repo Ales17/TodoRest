@@ -17,4 +17,7 @@ public class UserEntity {
 
     @Enumerated(EnumType.ORDINAL)
     private Role role;
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 }
