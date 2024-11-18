@@ -72,4 +72,16 @@ public class TaskService {
         }
         taskRepository.delete(task);
     }
+
+    public void updateTask(Long userId, Task task) {
+        UserEntity user = userService.findOne(userId);
+        Task t = taskRepository.findById(task.getId()).orElseThrow(() -> new TaskNotFoundException("Unable to find this task"));
+        t.setDescription(task.getDescription());
+        t.setName(task.getName());
+        t.setCompleted(task.isCompleted());
+        if (!hasAccess(task, user)) {
+            throw new AccessDeniedException("You have no right to delete this task.");
+        }
+        taskRepository.save(t);
+    }
 }
