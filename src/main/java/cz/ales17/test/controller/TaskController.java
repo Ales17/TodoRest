@@ -2,6 +2,8 @@ package cz.ales17.test.controller;
 
 import cz.ales17.test.entity.Task;
 import cz.ales17.test.service.TaskService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,5 +25,11 @@ public class TaskController {
     @GetMapping("/tasks/{taskId}")
     public Task showTask(@RequestHeader("X-User-Id") Long userId, @PathVariable("taskId") Long taskId) {
         return taskService.findTask(userId, taskId);
+    }
+
+    @PutMapping("/tasks/new")
+    public ResponseEntity<Task> createTask(@RequestHeader("X-User-Id") Long userId, @RequestBody Task task) {
+        Task newTask = taskService.createTask(userId, task);
+        return new ResponseEntity<>(newTask, HttpStatus.CREATED);
     }
 }
