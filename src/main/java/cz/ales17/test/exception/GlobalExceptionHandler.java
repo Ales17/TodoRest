@@ -29,4 +29,10 @@ public class GlobalExceptionHandler {
         ErrorObject eo = new ErrorObject(HttpStatus.FORBIDDEN.value(), e.getMessage(), new Date());
         return new ResponseEntity<>(eo, HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(TaskNotFoundException.class)
+    public ResponseEntity<ErrorObject> handleTaskNotFoundException(TaskNotFoundException e) {
+        ErrorObject eo = new ErrorObject(HttpStatus.NOT_FOUND.value(), e.getMessage(), new Date());
+        return new ResponseEntity<>(eo, HttpStatus.NOT_FOUND);
+    }
 }
