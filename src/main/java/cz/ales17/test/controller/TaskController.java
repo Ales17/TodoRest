@@ -38,4 +38,11 @@ public class TaskController {
         taskService.deleteTask(userId, taskId);
         return new ResponseEntity<>("Deleted", HttpStatus.OK);
     }
+
+    @PatchMapping("/tasks/{taskId}")
+    public ResponseEntity<String> updateTask(@RequestHeader("X-User-Id") Long userId, @PathVariable("taskId") Long taskId,@RequestBody Task task) {
+        task.setId(taskId);
+        taskService.updateTask(userId, task);
+        return new ResponseEntity<>("Updated", HttpStatus.NO_CONTENT);
+    }
 }
