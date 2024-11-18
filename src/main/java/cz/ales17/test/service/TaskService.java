@@ -57,5 +57,10 @@ public class TaskService {
         return user.getRole() == Role.USER && task.getCreatedBy() != user || user.getRole() == Role.COMPANY_ADMIN && task.getCreatedBy().getCompany() != user.getCompany();
     }
 
-
+    public Task createTask(Long userId, Task task) {
+        UserEntity user = userService.findOne(userId);
+        task.setId(null);
+        task.setCreatedBy(user);
+        return taskRepository.save(task);
+    }
 }
