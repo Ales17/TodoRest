@@ -70,6 +70,6 @@ public class TaskService {
         if (!hasAccess(task, user)) {
             throw new AccessDeniedException("You have no right to delete this task.");
         }
-
+        taskRepository.delete(task);
     }
 }
