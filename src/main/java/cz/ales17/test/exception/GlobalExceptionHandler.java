@@ -23,4 +23,10 @@ public class GlobalExceptionHandler {
         ErrorObject eo = new ErrorObject(HttpStatus.BAD_REQUEST.value(), e.getMessage(), new Date());
         return new ResponseEntity<>(eo, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorObject> handleAccessDeniedException(AccessDeniedException e) {
+        ErrorObject eo = new ErrorObject(HttpStatus.FORBIDDEN.value(), e.getMessage(), new Date());
+        return new ResponseEntity<>(eo, HttpStatus.FORBIDDEN);
+    }
 }
