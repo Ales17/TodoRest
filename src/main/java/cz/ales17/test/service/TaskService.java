@@ -54,7 +54,7 @@ public class TaskService {
     }
 
     private boolean hasAccess(Task task, UserEntity user) {
-        return user.getRole() == Role.USER && task.getCreatedBy() == user || user.getRole() == Role.COMPANY_ADMIN && task.getCreatedBy().getCompany() == user.getCompany();
+        return user.getRole() == Role.USER && task.getCreatedBy() == user || user.getRole() == Role.COMPANY_ADMIN && task.getCreatedBy().getCompany() == user.getCompany() || user.getRole() == Role.SUPER_USER;
     }
 
     public Task createTask(Long userId, Task task) {
