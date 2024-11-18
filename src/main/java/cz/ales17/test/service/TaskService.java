@@ -5,6 +5,7 @@ import cz.ales17.test.entity.Role;
 import cz.ales17.test.entity.Task;
 import cz.ales17.test.entity.UserEntity;
 import cz.ales17.test.exception.AccessDeniedException;
+import cz.ales17.test.exception.TaskNotFoundException;
 import cz.ales17.test.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -45,13 +46,16 @@ public class TaskService {
 
     public Task findTask(Long userId, Long taskId) {
         UserEntity user = userService.findOne(userId);
-        Role userRole = user.getRole();
-        Task task = taskRepository.findById(taskId).orElseThrow(() -> new RuntimeException());
-        if (userRole == Role.USER && task.getCreatedBy() != user || userRole == Role.COMPANY_ADMIN && task.getCreatedBy().getCompany() != user.getCompany()) {
+        Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskNotFoundException("Unable to find this task"));
+        if (hasAccess(task, user)) {
             throw new AccessDeniedException("You have no access to this task.");
         }
-
-        return taskRepository.findById(taskId).orElseThrow(() -> new RuntimeException());
-
+        return task;
     }
+
+    private boolean hasAccess(Task task, UserEntity user) {
+        return user.getRole() == Role.USER && task.getCreatedBy() != user || user.getRole() == Role.COMPANY_ADMIN && task.getCreatedBy().getCompany() != user.getCompany();
+    }
+
+
 }
