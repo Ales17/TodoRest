@@ -47,14 +47,14 @@ public class TaskService {
     public Task findTask(Long userId, Long taskId) {
         UserEntity user = userService.findOne(userId);
         Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskNotFoundException("Unable to find this task"));
-        if (hasAccess(task, user)) {
-            throw new AccessDeniedException("You have no access to this task.");
+        if (!hasAccess(task, user)) {
+            throw new AccessDeniedException("You have no right to view this task.");
         }
         return task;
     }
 
     private boolean hasAccess(Task task, UserEntity user) {
-        return user.getRole() == Role.USER && task.getCreatedBy() != user || user.getRole() == Role.COMPANY_ADMIN && task.getCreatedBy().getCompany() != user.getCompany();
+        return user.getRole() == Role.USER && task.getCreatedBy() == user || user.getRole() == Role.COMPANY_ADMIN && task.getCreatedBy().getCompany() == user.getCompany();
     }
 
     public Task createTask(Long userId, Task task) {
