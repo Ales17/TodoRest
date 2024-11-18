@@ -17,6 +17,9 @@ public class Task {
     private String name;
 
     private String description;
+
+    private boolean completed;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity createdBy;
