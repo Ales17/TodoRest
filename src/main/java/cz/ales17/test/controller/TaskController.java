@@ -32,4 +32,10 @@ public class TaskController {
         Task newTask = taskService.createTask(userId, task);
         return new ResponseEntity<>(newTask, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/tasks/{taskId}")
+    public ResponseEntity<String> deleteTask(@RequestHeader("X-User-Id") Long userId, @PathVariable("taskId") Long taskId) {
+        taskService.deleteTask(userId, taskId);
+        return new ResponseEntity<>("Deleted", HttpStatus.OK);
+    }
 }
