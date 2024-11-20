@@ -7,19 +7,16 @@ import cz.ales17.test.entity.UserEntity;
 import cz.ales17.test.exception.AccessDeniedException;
 import cz.ales17.test.exception.TaskNotFoundException;
 import cz.ales17.test.repository.TaskRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
     private final UserService userService;
-
-    public TaskService(TaskRepository taskRepository, UserService userService) {
-        this.taskRepository = taskRepository;
-        this.userService = userService;
-    }
 
     public List<Task> findAll() {
         return taskRepository.findAll();
