@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 @SpringBootTest
@@ -89,4 +89,23 @@ class TaskControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+
+
+    @Test
+    void shouldDeleteItemWhenIdIsValid() throws Exception {
+        mockMvc.perform(delete("/api/tasks/1").header("X-User-Id", "1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldReturn404WhenDeletingNonexistentItem() throws Exception {
+        mockMvc.perform(delete("/api/tasks/999").header("X-User-Id", "2"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldReturn403WhenDeletingItemWithoutPermission() throws Exception {
+        mockMvc.perform(delete("/api/tasks/1").header("X-User-Id", "2"))
+                .andExpect(status().isForbidden());
+    }
 }
