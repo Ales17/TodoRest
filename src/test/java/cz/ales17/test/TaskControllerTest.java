@@ -13,8 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -107,5 +106,17 @@ class TaskControllerTest {
     void shouldReturn403WhenDeletingItemWithoutPermission() throws Exception {
         mockMvc.perform(delete("/api/tasks/1").header("X-User-Id", "2"))
                 .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void shouldReturn201WhenTaskIsCreated() throws Exception {
+        mockMvc.perform(put("/api/tasks/new").header("X-User-Id", "1")
+                        .contentType("application/json")
+                        .content("{\"name\":\"New Task\",\"description\":\"New Task Description\",\"completed\":false}"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.name").value("New Task"))
+                .andExpect(jsonPath("$.description").value("New Task Description"))
+                .andExpect(jsonPath("$.completed").value(false));
     }
 }
