@@ -41,7 +41,7 @@ public class TaskService {
         UserEntity user = userService.findOne(userId);
         Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskNotFoundException("Unable to find this task"));
         if (!hasAccess(task, user)) {
-            throw new AccessDeniedException("You have no right to view this task.");
+            throw new AccessDeniedException("You do not have permission to access this task.");
         }
         return task;
     }
@@ -61,7 +61,7 @@ public class TaskService {
         UserEntity user = userService.findOne(userId);
         Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskNotFoundException("Unable to find this task"));
         if (!hasAccess(task, user)) {
-            throw new AccessDeniedException("You have no right to delete this task.");
+            throw new AccessDeniedException("You do not have permission to delete this task.");
         }
         taskRepository.delete(task);
     }
@@ -73,7 +73,7 @@ public class TaskService {
         t.setName(task.getName());
         t.setCompleted(task.isCompleted());
         if (!hasAccess(task, user)) {
-            throw new AccessDeniedException("You have no right to delete this task.");
+            throw new AccessDeniedException("You do not have permission to update this task.");
         }
         taskRepository.save(t);
     }
