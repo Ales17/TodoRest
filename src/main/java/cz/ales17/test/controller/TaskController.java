@@ -1,7 +1,9 @@
 package cz.ales17.test.controller;
 
 import cz.ales17.test.entity.Task;
+import cz.ales17.test.entity.UserEntity;
 import cz.ales17.test.service.TaskService;
+import cz.ales17.test.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +16,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskController {
     private final TaskService taskService;
-
+    private final UserService userService;
     @GetMapping("/tasks")
     public List<Task> tasks(@RequestHeader("X-User-Id") Long userId) {
-        return taskService.findTasksByUserRole(userId);
+        UserEntity user = userService.findOne(userId);
+        return taskService.findTasksByUser(user);
     }
 
     @GetMapping("/tasks/{taskId}")

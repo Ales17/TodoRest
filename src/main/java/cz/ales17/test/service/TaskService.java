@@ -22,27 +22,17 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
-    public List<Task> findByUser(UserEntity user) {
+    public List<Task> findTaskByUser(UserEntity user) {
         return taskRepository.findAllByCreatedByIs(user);
     }
 
-    public List<Task> findByCompany(Company company) {
+    public List<Task> findTasksByCompany(Company company) {
         return taskRepository.findAllByCreatedBy_Company(company);
     }
     public List<Task> findTasksByUser(UserEntity user) {
         return switch (user.getRole()) {
-            case USER -> findByUser(user);
-            case COMPANY_ADMIN -> findByCompany(user.getCompany());
-            case SUPER_USER -> findAll();
-        };
-    }
-    public List<Task> findTasksByUserRole(Long userId) {
-        UserEntity user = userService.findOne(userId);
-        Role userRole = user.getRole();
-
-        return switch (userRole) {
-            case USER -> findByUser(user);
-            case COMPANY_ADMIN -> findByCompany(user.getCompany());
+            case USER -> findTaskByUser(user);
+            case COMPANY_ADMIN -> findTasksByCompany(user.getCompany());
             case SUPER_USER -> findAll();
         };
     }
