@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>cz.ales17</groupId>
-	<artifactId>test</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>test</name>
-	<description>Demo project for Spring Boot</description>
+	<artifactId>todo-rest</artifactId>
+	<version>1.0.0</version>
+	<name>Todo REST Application</name>
+	<description>A demo project for a to-do application with a RESTful API built with Spring Boot.</description>
 	<url/>
 	<licenses>
 		<license/>
