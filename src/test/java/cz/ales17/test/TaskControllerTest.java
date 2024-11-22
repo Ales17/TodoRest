@@ -119,4 +119,20 @@ class TaskControllerTest {
                 .andExpect(jsonPath("$.description").value("New Task Description"))
                 .andExpect(jsonPath("$.completed").value(false));
     }
+
+    @Test
+    void shouldReturn204WhenTaskIsUpdated() throws Exception {
+        mockMvc.perform(patch("/api/tasks/1").header("X-User-Id", "1")
+                        .contentType("application/json")
+                        .content("{\"name\":\"Updated Task\",\"description\":\"Updated Task Description\",\"completed\":true}"))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void shouldReturn403WhenUpdatingTaskWithoutPermission() throws Exception {
+        mockMvc.perform(patch("/api/tasks/1").header("X-User-Id", "2")
+                        .contentType("application/json")
+                        .content("{\"name\":\"Updated Task\",\"description\":\"Updated Task Description\",\"completed\":true}"))
+                .andExpect(status().isForbidden());
+    }
 }
