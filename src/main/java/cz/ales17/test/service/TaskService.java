@@ -69,12 +69,12 @@ public class TaskService {
     public void updateTask(Long userId, Task task) {
         UserEntity user = userService.findOne(userId);
         Task t = taskRepository.findById(task.getId()).orElseThrow(() -> new TaskNotFoundException("Unable to find this task"));
-        t.setDescription(task.getDescription());
-        t.setName(task.getName());
-        t.setCompleted(task.isCompleted());
         if (!hasAccess(task, user)) {
             throw new AccessDeniedException("You do not have permission to update this task.");
         }
+        t.setDescription(task.getDescription());
+        t.setName(task.getName());
+        t.setCompleted(task.isCompleted());
         taskRepository.save(t);
     }
 }
