@@ -1,12 +1,12 @@
 INSERT INTO company (id, name)
-VALUES (1, 'Boni Global Company'),
+VALUES (1, 'Admin Company'),
        (2, 'HealthPlus Inc.'),
        (3, 'EcoBuild Industries'),
        (4, 'FinTech Partners'),
        (5, 'TechCorp Solutions');
 
 INSERT INTO user_entity (id, username, role, company_id)
-VALUES (1, 'superuser', 2, NULL),
+VALUES (1, 'superuser', 2, 1),
        (2, 'pnewton', 0, 2),
        (3, 'alittle', 1, 2),
        (4, 'swhite', 0, 3);
