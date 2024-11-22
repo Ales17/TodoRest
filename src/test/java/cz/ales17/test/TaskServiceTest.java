@@ -30,7 +30,7 @@ public class TaskServiceTest {
         when(taskRepository.findAll()).thenReturn(tasks);
         List<Task> result = taskService.findAll();
         assertEquals(1, result.size());
-        assertEquals("Task 1", result.getFirst().getName());
+        assertEquals("Task 1", result.get(0).getName());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class TaskServiceTest {
         when(taskRepository.findAllByCreatedByIs(user)).thenReturn(tasks);
         List<Task> result = taskService.findTaskByUser(user);
         assertEquals(1, result.size());
-        assertEquals("Task 1", result.getFirst().getName());
+        assertEquals("Task 1", result.get(0).getName());
     }
 
     @Test
@@ -51,7 +51,7 @@ public class TaskServiceTest {
         when(taskRepository.findAllByCreatedBy_Company(company)).thenReturn(tasks);
         List<Task> result = taskService.findTasksByCompany(company);
         assertEquals(1, result.size());
-        assertEquals("Task 1", result.getFirst().getName());
+        assertEquals("Task 1", result.get(0).getName());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class TaskServiceTest {
         when(taskRepository.findAllByCreatedByIs(user)).thenReturn(tasks);
         List<Task> result = taskService.findTasksByUser(user);
         assertEquals(1, result.size());
-        assertEquals("Task 1", result.getFirst().getName());
+        assertEquals("Task 1", result.get(0).getName());
     }
 
 
